@@ -69,11 +69,11 @@ export const modeUIConfig = {
 
 export const modeLogicConfig = {
   single: {
-    cqMessage: (yourStation, theirStation, arbitrary) => `CQ DE ${yourStation.callsign} K`,
+    cqMessage: (yourStation, theirStation, arbitrary) => `CQ ${yourStation.callsign} ${yourStation.callsign} K`,
     yourExchange: (yourStation, theirStation, arbitrary) => `5NN`,
     theirExchange: (yourStation, theirStation, arbitrary) => `R 5NN TU`,
-    yourSignoff: (yourStation, theirStation, arbitrary) => `TU EE`,
-    theirSignoff: (yourStation, theirStation, arbitrary) => `EE`,
+    yourSignoff: (yourStation, theirStation, arbitrary) => `TU ${yourStation.callsign}`,
+    theirSignoff: null,
     requiresInfoField: false,
     requiresInfoField2: false,
     showTuStep: false,
@@ -85,7 +85,7 @@ export const modeLogicConfig = {
     cqMessage: (yourStation, theirStation, arbitrary) => `CQ POTA DE ${yourStation.callsign}`,
     yourExchange: (yourStation, theirStation, arbitrary) => `UR 5NN <BK>`,
     theirExchange: (yourStation, theirStation, arbitrary) => `<BK> UR 5NN ${theirStation.state} ${theirStation.state} <BK>`,
-    yourSignoff: (yourStation, theirStation, arbitrary) => `<BK> TU ${arbitrary} 73 EE`,
+    yourSignoff: (yourStation, theirStation, arbitrary) => `<BK> 73 ${arbitrary} TU EE`,
     theirSignoff: (yourStation, theirStation, arbitrary) => `EE`,
     requiresInfoField: true,
     requiresInfoField2: false,
@@ -95,9 +95,9 @@ export const modeLogicConfig = {
     extraInfoFieldKey2: null
   },
   contest: {
-    cqMessage: (yourStation, theirStation, arbitrary) => `CQ TEST DE ${yourStation.callsign}`,
+    cqMessage: (yourStation, theirStation, arbitrary) => `CQ ${yourStation.callsign} TEST`,
     yourExchange: (yourStation, theirStation, arbitrary) => `5NN`,
-    theirExchange: (yourStation, theirStation, arbitrary) => `R 5NN ${theirStation.serialNumber} TU`,
+    theirExchange: (yourStation, theirStation, arbitrary) => `R 5NN ${theirStation.serialNumber}`,
     yourSignoff: (yourStation, theirStation, arbitrary) => `TU ${yourStation.callsign}`,
     theirSignoff: null,
     requiresInfoField: true,
@@ -121,8 +121,8 @@ export const modeLogicConfig = {
     extraInfoFieldKey2: "state"
   },
   cwt: {
-    cqMessage: (yourStation, theirStation, arbitrary) => `CQ CWT ${yourStation.callsign}`,
-    yourExchange: (yourStation, theirStation, arbitrary) => `${yourStation.name} CWA`,
+    cqMessage: (yourStation, theirStation, arbitrary) => `CWT ${yourStation.callsign} TEST`,
+    yourExchange: (yourStation, theirStation, arbitrary) => `${yourStation.name} ${yourStation.callsign[0]}`,
     theirExchange: (yourStation, theirStation, arbitrary) => `${theirStation.name} ${theirStation.cwopsNumber} TU`,
     yourSignoff: (yourStation, theirStation, arbitrary) => `TU ${yourStation.callsign}`,
     theirSignoff: null,

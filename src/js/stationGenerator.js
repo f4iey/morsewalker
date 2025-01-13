@@ -142,23 +142,24 @@ function getMASTERSCP() {
 } // end getMASTERSCP()
 
 function getUSCallsign(formats) {
+  let pattern;
   const matches = [];
   const format = randomElement(formats);
   switch (format) {
     case '1x1':
-      const pattern = /^[KNW][0-9][A-Z]{1}$/img;
+      pattern = /^[KNW][0-9][A-Z]{1}$/img;
     case '1x2':
-      const pattern = /^[KNW][0-9][A-Z]{2}$/img;
+      pattern = /^[KNW][0-9][A-Z]{2}$/img;
     case '1x3':
-      const pattern = /^[KNW][0-9][A-Z]{3}$/img;
+      pattern = /^[KNW][0-9][A-Z]{3}$/img;
     case '2x1':
-      const pattern = /^([KNW][A-Z]|A[A-L])[0-9][A-Z]$/img;
+      pattern = /^([KNW][A-Z]|A[A-L])[0-9][A-Z]$/img;
     case '2x2':
-      const pattern = /^([KNW][A-Z]|A[A-L])[0-9][A-Z]{2}$/img;
+      pattern = /^([KNW][A-Z]|A[A-L])[0-9][A-Z]{2}$/img;
     case '2x3':
-      const pattern = /^[KNW][A-Z][0-9][A-Z]{3}$/img;
+      pattern = /^[KNW][A-Z][0-9][A-Z]{3}$/img;
     default:
-      const pattern = /^[KNW][0-9][A-Z]{3}$/img; // Defaults to '1x3'
+      pattern = /^[KNW][0-9][A-Z]{3}$/img; // Defaults to '1x3'
   }
   CALLSIGNS.forEach(element => {
     if (pattern.test(element)) matches.push(element);
