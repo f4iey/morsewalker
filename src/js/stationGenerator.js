@@ -113,6 +113,59 @@ export function getCallingStation() {
     qsbDepth: Math.random() * 0.4 + 0.6,
   }
 }
+/**
+ * Handles Super Check partial for callsign selection
+ */
+
+function parseMASTERSCP() {
+  // This is the callback function, called by get_MASTERSCP() upon "load"
+  let content = this.responseText;
+
+  CALLSIGNS = content.split(/\r?\n/);   // split the text into array elements
+                                        // on the basis of \r and \n
+  CALLSIGNS.splice(0,4);                // The first 4 elements are discarded.
+
+} // end parseMASTERSCP()
+
+
+// From https://onlinewebtutorblog.com/how-to-read-a-file-from-server-using-javascript/
+function getMASTERSCP() {
+  // Creates a http request of type GET and downloads the MASTER.SCP
+    let xmlhttp;
+
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.addEventListener("load", parseMASTERSCP);  // callback function
+
+    // The file to download is hard-coded below.
+    xmlhttp.open("GET", "Libs/MASTER.SCP", true);
+    xmlhttp.send();
+} // end getMASTERSCP()
+
+function getUSCallsign(formats) {
+  const matches = [];
+  const format = randomElement(formats);
+  switch (format) {
+    case '1x1':
+      const pattern = /^[KNW][0-9][A-Z]{1}$/img;
+    case '1x2':
+      const pattern = /^[KNW][0-9][A-Z]{2}$/img;
+    case '1x3':
+      const pattern = /^[KNW][0-9][A-Z]{3}$/img;
+    case '2x1':
+      const pattern = /^([KNW][A-Z]|A[A-L])[0-9][A-Z]$/img;
+    case '2x2':
+      const pattern = /^([KNW][A-Z]|A[A-L])[0-9][A-Z]{2}$/img;
+    case '2x3':
+      const pattern = /^[KNW][A-Z][0-9][A-Z]{3}$/img;
+    default:
+      const pattern = /^[KNW][0-9][A-Z]{3}$/img; // Defaults to '1x3'
+  }
+  CALLSIGNS.forEach(element => {
+    if (pattern.test(element)) matches.push(element);
+  });
+  //return a random US callsign from MASTER.SCP
+  return matches[Math.round(Math.random() * matches.length)];
+}
 
 /**
  * Generates a random US amateur radio callsign.
@@ -154,6 +207,10 @@ function getRandomUSCallsign(formats) {
     default:
       return `${prefix}${number}${generateRandomLetters(3)}`; // Default to '1x3'
   }
+}
+
+function getAllCallsigns() {
+  return CALLSIGNS[Math.round(Math.random() * CALLSIGNS.length)];
 }
 
 /**
