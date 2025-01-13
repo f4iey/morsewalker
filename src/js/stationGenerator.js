@@ -97,7 +97,8 @@ export function getCallingStation() {
   let isUS = inputs.usOnly ? true : Math.random() < 0.4;
 
   return {
-    callsign: isUS ? getRandomUSCallsign(inputs.formats) : getRandomNonUSCallsign(inputs.formats),
+    //callsign: isUS ? getRandomUSCallsign(inputs.formats) : getRandomNonUSCallsign(inputs.formats),
+    callsign: isUS ? getUSCallsign(inputs.formats) : getAllCallsigns(inputs.formats)
     wpm: Math.floor(Math.random() * (inputs.maxSpeed - inputs.minSpeed + 1)) + inputs.minSpeed,
     volume: Math.random() * (inputs.maxVolume - inputs.minVolume) + inputs.minVolume,
     frequency: Math.floor(Math.random() * (inputs.maxTone - inputs.minTone) + inputs.minTone),
